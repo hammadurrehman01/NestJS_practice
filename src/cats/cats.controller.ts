@@ -1,4 +1,8 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller('cats')
-export class CatsController {}
+export class CatsController {
+  @Get()
+  findAll(@Req() request: Request) {}
+}
