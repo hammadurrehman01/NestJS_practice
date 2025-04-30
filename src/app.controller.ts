@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, Post } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Post, Redirect } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller('/practice')
@@ -20,5 +20,11 @@ export class AppController {
   @Header('Cache-Control', 'cache')
   withHeaders() {
     return 'No store cache in the headers';
+  }
+
+  @Get('/redirect')
+  @Redirect('https://nestjs.com', 301)
+  redirect() {
+    return 
   }
 }
