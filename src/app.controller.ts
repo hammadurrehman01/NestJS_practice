@@ -25,6 +25,6 @@ export class AppController {
   @Get('/redirect')
   @Redirect('https://nestjs.com', 301)
   redirect() {
-    return 
+    return
   }
 }

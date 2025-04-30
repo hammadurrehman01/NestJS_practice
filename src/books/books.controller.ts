@@ -1,33 +1,46 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
   Post,
+  Put,
   Query,
   Req,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { CreateBookDto } from './dtos/create-book.dto';
+import { BooksService } from './books.service';
 
 @Controller('books')
 export class BooksController {
-  @Get()
-  findAll(@Req() request: Request, @Query('genre') genre: string) {
-    if(genre) {
-      return `${genre} Books: `;
-    }
-    return `All Books: `;
-  }
-
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return `We have ${id} books`;
-  }
+  constructor(private booksService: BooksService) { }
 
   @Post()
   create(@Body() createBookDto: CreateBookDto) {
-    return createBookDto;
+    return this.booksService.create(createBookDto)
   }
+
+  @Get()
+  findAll(@Query('genre') genre?: string) {
+    return this.booksService.findAll(genre)
+  }
+
+  @Get(':id')
+  findById(@Param('id', ParseIntPipe) id: number) {
+    return this.booksService.findById(id)
+  }
+
+  @Put(":id")
+  update(@Param('id', ParseIntPipe) id: number, @Body() createBookDto: CreateBookDto) {
+    return this.booksService.update
+  }
+
+  @Delete(":id")
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.booksService.delete
+  }
+
+
 }
