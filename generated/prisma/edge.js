@@ -128,7 +128,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\practice\\NestJS_practice\\generated\\prisma",
+      "value": "/home/ahtisham-ansari/Documents/Practice/NestJS_practice/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -137,12 +137,12 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\practice\\NestJS_practice\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/ahtisham-ansari/Documents/Practice/NestJS_practice/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

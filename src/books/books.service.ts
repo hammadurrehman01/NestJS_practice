@@ -1,42 +1,52 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateBookDto } from './dtos/create-book.dto';
 
 @Injectable()
 export class BooksService {
-    constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-    create(data: CreateBookDto) {
-        return this.prisma.books.create({ data })
+  create(data: CreateBookDto) {
+    return this.prisma.books.create({ data });
+  }
+
+  async findAll(genre?: string) {
+    if (genre) {
+      const books = await this.prisma.books.findMany({
+        where: { genre },
+      });
+
+      if (books.length === 0) {
+        throw new NotFoundException(`No books found for genre: ${genre}`);
+      }
+
+      return books;
+    }
+    return this.prisma.books.findMany();
+  }
+
+  async findById(id: number) {
+    const book = await this.prisma.books.findUnique({
+      where: { id },
+    });
+
+    if (!book) {
+      throw new NotFoundException(`Book with the ID ${id} not found`);
     }
 
-    findAll(genre?: string) {
-        if (genre) {
-            return this.prisma.books.findMany({
-                where: { genre }
-            })
-        }
-        return this.prisma.books.findMany()
-    }
+    return book;
+  }
 
-    findById(id: number) {
-        return this.prisma.books.findUnique({
-            where: { id }
-        })
-    }
+  update(id: number, data: CreateBookDto) {
+    return this.prisma.books.update({
+      where: { id },
+      data,
+    });
+  }
 
-    update(id: number, data: CreateBookDto) {
-        return this.prisma.books.update({
-            where: { id },
-            data
-        })
-    }
-
-    delete(id: number) {
-        return this.prisma.books.delete({
-            where: { id }
-        })
-    }
-
-
+  delete(id: number) {
+    return this.prisma.books.delete({
+      where: { id },
+    });
+  }
 }

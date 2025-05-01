@@ -15,32 +15,45 @@ import { BooksService } from './books.service';
 
 @Controller('books')
 export class BooksController {
-  constructor(private booksService: BooksService) { }
+  constructor(private booksService: BooksService) {}
 
   @Post()
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto)
+  async create(@Body() createBookDto: CreateBookDto) {
+    const createdBook = await this.booksService.create(createBookDto);
+    return {
+      message: 'Book created successfully',
+      data: createdBook,
+    };
   }
 
   @Get()
-  findAll(@Query('genre') genre?: string) {
-    return this.booksService.findAll(genre)
+  async findAll(@Query('genre') genre?: string) {
+    const books = await this.booksService.findAll(genre);
+    return {
+      message: 'Books retrieved successfully',
+      data: books,
+    };
   }
 
   @Get(':id')
-  findById(@Param('id', ParseIntPipe) id: number) {
-    return this.booksService.findById(id)
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    const book = await this.booksService.findById(id);
+    return {
+      message: 'Book retrieved successfully',
+      data: book,
+    };
   }
 
-  @Put(":id")
-  update(@Param('id', ParseIntPipe) id: number, @Body() createBookDto: CreateBookDto) {
-    return this.booksService.update
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createBookDto: CreateBookDto,
+  ) {
+    return this.booksService.update(id, createBookDto);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
-    return this.booksService.delete
+    return this.booksService.delete(id);
   }
-
-
 }
