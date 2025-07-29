@@ -25,13 +25,13 @@ export class BooksService {
     return this.prisma.books.findMany();
   }
 
-  async findById(id: number) {
-    const book = await this.prisma.books.findUnique({
-      where: { id },
+  async findByName(name: string) {
+    const book = await this.prisma.books.findFirstOrThrow({
+      where: { name },
     });
 
     if (!book) {
-      throw new NotFoundException(`Book with the ID ${id} not found`);
+      throw new NotFoundException(`Book with the Name ${name} not found`);
     }
 
     return book;

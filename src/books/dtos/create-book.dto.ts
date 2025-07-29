@@ -19,4 +19,8 @@ export class CreateBookDto {
   @IsNumber()
   @IsNotEmpty()
   published_date: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  price: number;
 }

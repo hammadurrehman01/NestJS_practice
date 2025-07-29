@@ -127,8 +127,21 @@ exports.Prisma.BooksScalarFieldEnum = {
   author: 'author',
   genre: 'genre',
   published_date: 'published_date',
+  price: 'price',
+  userId: 'userId',
   createAt: 'createAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  provider: 'provider',
+  providerId: 'providerId',
+  bio: 'bio',
+  avatar: 'avatar'
 };
 
 exports.Prisma.SortOrder = {
@@ -141,9 +154,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  Books: 'Books'
+  Books: 'Books',
+  User: 'User'
 };
 
 /**

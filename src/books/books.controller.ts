@@ -35,9 +35,9 @@ export class BooksController {
     };
   }
 
-  @Get(':id')
-  async findById(@Param('id', ParseIntPipe) id: number) {
-    const book = await this.booksService.findById(id);
+  @Get(':name')
+  async findByName(@Param('name') name: string) {
+    const book = await this.booksService.findByName(name);
     return {
       message: 'Book retrieved successfully',
       data: book,
