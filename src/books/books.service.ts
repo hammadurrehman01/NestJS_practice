@@ -10,19 +10,40 @@ export class BooksService {
     return this.prisma.books.create({ data });
   }
 
+  // async findAll(genre?: string) {
+  //   if (genre) {
+  //     const books = await this.prisma.books.findMany({
+  //       where: { genre },
+  //     });
+
+  //     if (books.length === 0) {
+  //       throw new NotFoundException(`No books found for genre: ${genre}`);
+  //     }
+
+  //     return books;
+  //   }
+  //   return this.prisma.books.findMany();
+  // }
   async findAll(genre?: string) {
-    if (genre) {
-      const books = await this.prisma.books.findMany({
-        where: { genre },
-      });
+    const books = await this.prisma.books.findMany({
+      where: genre ? { genre } : undefined,
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            bio: true,
+            avatar: true,
+          },
+        },
+      },
+    });
 
-      if (books.length === 0) {
-        throw new NotFoundException(`No books found for genre: ${genre}`);
-      }
-
-      return books;
+    if(books.length === 0 && genre) {
+      NotFoundException(`No books found for genre: ${genre}`)
     }
-    return this.prisma.books.findMany();
+
   }
 
   async findByName(name: string) {
