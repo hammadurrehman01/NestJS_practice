@@ -4,7 +4,7 @@ import { CreateBookDto } from './dtos/create-book.dto';
 
 @Injectable()
 export class BooksService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   create(data: CreateBookDto) {
     return this.prisma.books.create({ data });
@@ -27,6 +27,7 @@ export class BooksService {
   async findAll(genre?: string) {
     const books = await this.prisma.books.findMany({
       where: genre ? { genre } : undefined,
+      omit: { userId: true },
       include: {
         user: {
           select: {
@@ -40,10 +41,12 @@ export class BooksService {
       },
     });
 
-    if(books.length === 0 && genre) {
-      NotFoundException(`No books found for genre: ${genre}`)
+
+    if (books.length === 0) {
+      throw new NotFoundException(`No books found for genre: ${genre}`)
     }
 
+    return books
   }
 
   async findByName(name: string) {
