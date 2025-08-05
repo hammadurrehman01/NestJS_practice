@@ -41,11 +41,9 @@ export class BooksService {
       },
     });
 
-
-    if (books.length === 0) {
+    if(books.length === 0 && genre) {
       throw new NotFoundException(`No books found for genre: ${genre}`)
     }
-
     return books
   }
 
