@@ -7,7 +7,7 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return `This action returns all users`;
+    return ;
   }
 
   findOne(id: number) {
