@@ -39,7 +39,13 @@ export class AuthService {
             }
         });
 
-        if (user.password !== pass) {
+        if (!user || !user.password) {
+            throw new UnauthorizedException()
+        }
+
+        const isMatch = await bcrypt.compare(pass, user.password);
+
+        if (!isMatch) {
             throw new UnauthorizedException()
         }
 
@@ -47,7 +53,8 @@ export class AuthService {
         const access_token = await this.jwtService.signAsync(payload)
 
         return { access_token }
-
     }
+
+   
 
 }
