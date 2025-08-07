@@ -16,8 +16,18 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    const users = await this.usersService.findAll();
+    if (users && users.length > 0) {
+      const usersWithUsername = users.map((user) => {
+        return {
+          ...user,
+          username: user.name.split(' ').join('').toLowerCase(),
+        };
+      });
+      return usersWithUsername;
+    }
+    return users;
   }
 
   @Get(':id')
